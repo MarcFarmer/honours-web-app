@@ -1,0 +1,21 @@
+- if !@term.blank?
+  .row.row-centered.row-search-results
+    %p.pathways-heading
+      %strong
+        Found
+        = pluralize(@pathways.count, 'clinical pathway')
+        matching
+        = "\"#{@term}\""
+    - @pathways.each do |pathway|
+      .result-pathway
+        %p
+          = link_to pathway.name, pathway_path(pathway)
+          %br
+          - tags = pathway.tags
+          - if !tags.empty?
+            Tags:
+            - tags.each do |tag|
+              - if tag != tags.last
+                = "#{tag.name},"
+              - else
+                = tag.name

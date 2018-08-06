@@ -1,0 +1,7 @@
+.edit_instruction_form_errors
+  = render 'application/form_errors', instance: @instruction
+
+%p
+  = f.text_field :content, :rows => 3, class: 'instruction-content text-field'
+  %br
+%br

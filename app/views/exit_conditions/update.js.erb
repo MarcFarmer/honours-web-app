@@ -1,0 +1,12 @@
+<% if params[:commit] == 'Save' %>
+    <% if @valid %>
+        $("#<%= @exit_condition.id %>").html("<%= escape_javascript(render partial: 'exit_conditions/list_item',
+          locals: { exit_condition: @exit_condition } ) %>");
+    <% else %>
+        $("#<%= @exit_condition.id %>").find('.edit_ec_form_errors').html("<%= escape_javascript(render partial: 'application/form_errors',
+          locals: { instance: @exit_condition } ) %>");
+    <% end %>
+<% else %>
+    $("#<%= @exit_condition.id %>").html("<%= escape_javascript(render partial: 'exit_conditions/list_item',
+      locals: { exit_condition: @exit_condition } ) %>");
+<% end %>

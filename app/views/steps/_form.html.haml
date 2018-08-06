@@ -1,0 +1,8 @@
+= form_for @step.pathway, url: pathway_step_modal_edit_path(@step.pathway, @step), remote: true, method: 'put' do |f|
+
+  #pathway_form_errors
+    = render 'application/form_errors', instance: @step.pathway
+
+  #edit_step_name
+    = render partial: 'pathways/step_name_fields', locals: {f: f}
+    = f.submit 'Save step', class: 'btn btn-primary', name: 'save'

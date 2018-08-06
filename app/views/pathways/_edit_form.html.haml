@@ -1,0 +1,11 @@
+= form_for @pathway, url: pathway_modal_edit_path(@pathway), remote: true, method: 'put' do |f|
+
+  #pathway_form_errors
+    = render 'application/form_errors', instance: @pathway
+
+  = f.hidden_field :step_id, value: @step.id, name: 'step_id'
+
+  #edit_pathway_name_and_tags
+    = render partial: 'pathways/name_and_tags_fields', locals: {f: f}
+    %br
+    = f.submit 'Save pathway name and tags', class: 'btn btn-primary'

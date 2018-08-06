@@ -1,0 +1,19 @@
+%td.edit-in-list{colspan: '999'}
+  = form_for @step, url: url, html: {method: :put}, remote: true do |exit_condition_form|
+    .fields
+      = exit_condition_form.fields_for "#{nested_model}s".to_sym, nested_instance do |f|
+        .row
+          .col-md-12
+            .edit_ec_form_errors
+              = render 'application/form_errors', instance: @step
+        .row
+          .col-md-8
+            = f.hidden_field :step, value: @step.id
+            = link_to nested_instance.exit_step.name, edit_pathway_step_path(nested_instance.exit_step.pathway, nested_instance.exit_step), class: 'exit-condition-link'
+          .col-md-2.edit-without-padding
+            = f.number_field :min_risk, class: 'risk-score-field score-range-field text-field', min: 0
+            to
+            = f.number_field :max_risk, class: 'risk-score-field score-range-field text-field', min: 0
+          .col-md-2
+            %button.btn.btn-primary{:name => "commit", :type => "submit", :value => "Save"} Save
+            %button.btn.btn-danger{:name => "commit", :type => "submit", :value => "Cancel"} Cancel

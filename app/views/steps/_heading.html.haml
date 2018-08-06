@@ -1,0 +1,11 @@
+Editing
+%strong
+  = @step.name
+= link_to html_icon('edit'), '#', id: 'edit_step_link', data: {toggle: "modal", target: "#edit_step_modal"}
+
+%br
+
+in pathway
+%strong
+  = @pathway.name
+= link_to html_icon('edit'), '#', id: 'edit_pathway_link', data: {toggle: "modal", target: "#edit_pathway_modal"}

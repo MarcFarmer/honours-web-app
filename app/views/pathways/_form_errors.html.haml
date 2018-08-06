@@ -1,0 +1,8 @@
+- if @pathway.errors.any?
+  %h2
+    = pluralize(@pathway.errors.count, "error")
+    prohibited this pathway from being saved:
+  %ul
+    - @pathway.errors.full_messages.each do |msg|
+      %li
+        = msg

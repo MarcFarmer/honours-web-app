@@ -1,0 +1,2 @@
+$("#question_<%= @question.id %>").remove();
+$("#score_range_message").html("<%= escape_javascript(render partial: 'steps/score_range_message') %>");

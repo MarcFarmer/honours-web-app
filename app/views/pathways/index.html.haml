@@ -1,0 +1,80 @@
+%br
+%br
+%br
+
+.container
+  .text-center
+    %button#pathway_modal_button.btn.btn-primary.large-button{:type => "button"} Create new clinical pathway
+    = render partial: 'application/modal_form', locals: {form_partial: 'pathways/form', modal_id: 'pathway_modal', form_id: 'pathway_form', form_message: nil}
+
+    %br
+    %br
+    %br
+    %br
+
+    #pathway_search
+      .row.row-centered
+        .input-group
+          = autocomplete_field_tag 'search-term_autocomplete_pathway_name', '', autocomplete_pathway_path, name: 'search-term', size: 60, class: 'form-control autocomplete-text-field input-lg', placeholder: 'Search for a clinical pathway'
+      #search_results
+
+    %br
+    %br
+
+    %h2
+      %strong
+        Recent created clinical pathways
+
+  %table.table
+    %thead
+      %tr
+        %th
+          %h2
+            Clinical Pathway
+        %th
+          %h2
+            Created
+    %tbody
+      - @pathways.each do |pathway|
+        %tr
+          %td
+            = link_to pathway.name, pathway_path(pathway)
+            %br
+            - tags = pathway.tags
+            - if !tags.empty?
+              Tags:
+              - tags.each do |tag|
+                - if tag != tags.last
+                  = "#{tag.name},"
+                - else
+                  = tag.name
+          %td
+            = time_ago_in_words(pathway.created_at)
+            ago
+
+:erb
+  <script>
+    var typingTimer;
+    var doneTypingInterval = 500;
+    var autocomplete_field = $('input#search-term_autocomplete_pathway_name');
+    // key is being pressed: reset timer
+    autocomplete_field.on('keydown', function () {
+        clearTimeout(typingTimer);
+    });
+
+    // after key has been pressed: start timer
+    autocomplete_field.on('keyup', function () {
+        clearTimeout(typingTimer);
+        typingTimer = setTimeout(doneTyping, doneTypingInterval);
+    });
+
+    autocomplete_field.bind('railsAutocomplete.select', function(event, data){
+        doneTyping();
+    });
+
+    // user stopped typing, search for existing step
+    function doneTyping () {
+        var autocomplete_field = $('input#search-term_autocomplete_pathway_name');
+        $.get( '<%= search_pathways_path %>', { term: autocomplete_field.val() } );
+    }
+  </script>

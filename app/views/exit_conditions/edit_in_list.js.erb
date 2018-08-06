@@ -1,0 +1,4 @@
+$("#<%= @exit_condition.id %>").html("<%= escape_javascript(render partial: 'steps/edit_in_list', 
+  locals: { url: pathway_step_exit_condition_path(@exit_condition.step.pathway, @exit_condition.step, @exit_condition), 
+    nested_model: 'exit_condition', 
+    nested_instance: @exit_condition } ) %>");

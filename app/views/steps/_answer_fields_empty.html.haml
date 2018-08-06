@@ -1,0 +1,5 @@
+-# for answer fields that exist without user explicitly adding an answer
+%p.fields
+  = f.text_field :content, class: 'answer-content text-field'
+  = f.number_field :score, min: 0, max: 99, class: 'risk-score-field'
+  = link_to_remove_fields "remove", f

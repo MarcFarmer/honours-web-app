@@ -1,0 +1,17 @@
+%table.table.table-list
+  %thead
+    %tr
+      %th.col-md-8
+        %h2#next_step_heading
+          = render partial: 'steps/next_step_heading'
+      %th.col-md-2
+        %h2
+          Score range
+      %th.col-md-2
+        // Buttons
+
+  %tbody
+    - if !exit_conditions.blank?
+      - exit_conditions.each do |ec|
+        %tr{id: "#{ec.id}", class: 'editable-item exit-condition'}
+          = render partial: 'exit_conditions/list_item', locals: { exit_condition: ec }

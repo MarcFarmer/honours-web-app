@@ -1,0 +1,6 @@
+= form_for @step, url: "/pathways/#{@pathway.id}/steps/#{@step.id}/exit_conditions", html: {method: :post}, remote: true do |f|
+  #ec_form_errors
+    = render 'application/form_errors', instance: @step
+  .fields
+    = f.fields_for :exit_conditions, @step.exit_conditions.last do |builder|
+      = render 'exit_conditions/exit_condition_fields', f: builder

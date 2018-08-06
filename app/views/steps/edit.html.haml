@@ -1,0 +1,134 @@
+%br
+
+= render partial: 'application/modal_form', locals: {form_partial: 'pathways/edit_form', modal_id: 'edit_pathway_modal', form_id: 'edit_pathway_form', form_message: 'pathway'}
+= render partial: 'application/modal_form', locals: {form_partial: 'steps/form', modal_id: 'edit_step_modal', form_id: 'edit_step_form', form_message: 'step'}
+
+.container#edit_step_container
+  .row
+    .col-md-10
+      .panel.panel-default
+        .panel-heading#edit_step_heading
+          = render partial: 'steps/heading'
+        .panel-body
+          #content
+            #my-tab-content.tab-content
+              #questions_and_instructions.tab-pane.active
+                %div{ id: 'editable_list', class: 'questions-instructions' }
+                  = render 'step_action_list'
+
+                %div.qi-form-background
+                  %table.table
+                    %tbody
+                      %tr
+                        %td.col-md-2
+                          %label
+                            %input#radio_question{:name => "toggle-qi-form", :type => "radio", :value => "1"}
+                            Question
+                          %label
+                            %input#radio_instruction{:name => "toggle-qi-form", :type => "radio", :value => "2"}
+                            Instruction
+
+                        %td.col-md-6
+                          #qi_form-1.toHide{:style => "display:none"}
+                            = render 'question_form'
+                          #qi_form-2.toHide{:style => "display:none"}
+                            = render 'instruction_form'
+                        %td.col-md-2
+                          // Empty
+                        %td
+                          // Empty
+
+              #exit_steps.tab-pane
+                #exit_conditions_list
+                  %div{ id: 'editable_list', class: 'exit-conditions' }
+                    = render partial: 'exit_conditions_list', locals: { step: @step, exit_conditions: (@step.exit_conditions)[0..-2] }
+
+
+                %div.qi-form-background#ec_form
+                  = render 'exit_condition_form'
+                  = render partial: 'steps/score_range_message'
+
+        .row#under_step_content
+          .col-md-4
+            - if @parent_steps != nil # show button to edit parent step
+              %ul.nav
+                - @parent_steps.each do |parent_step|
+                  %li
+                    %a{:href => edit_pathway_step_path(@pathway, parent_step), :class => 'navigation-link', :id => 'under_step_left'}
+                      = html_icon('back')
+                      Go back to
+                      %strong
+                        = parent_step.name
+          .col-md-4.text-center
+            .btn-group#step_tabs{"data-tabs" => "tabs"}
+              %a{"data-toggle" => "tab", :href => "#questions_and_instructions", :class => 'btn btn-default step-tab step-tab-disabled', 'data-placement' => 'right', 'title' => 'Edit questions and instructions'}
+                = html_icon('tab-left')
+              %a{"data-toggle" => "tab", :href => "#exit_steps", :class => 'btn btn-default step-tab step-tab-enabled', 'data-placement' => 'right', 'title' => 'Edit next steps'}
+                = html_icon('tab-right')
+          .col-md-4#under_step_right
+            %ul.nav
+              %li
+                %a{:href => pathway_preview_from_step_path(@pathway, @first_step, @step), :class => 'navigation-link', :id => 'under_step_right'}
+                  %i.icon-mobile
+                  Preview and finish
+                  %strong
+                    = @pathway.name
+
+    .col-md-2
+      = render 'steps/sidebar', { page: 'edit' }
+
+:erb
+  <script>
+    var step_titles = {};
+
+    // retrieve all step titles for this pathway as json object
+    $.getJSON( "<%= j pathway_step_titles_path(@pathway) %>", function( data ) {
+        step_titles = data;
+    });
+
+    var typingTimer;
+    var doneTypingInterval = 500;
+    var autocomplete_field = $('#autocomplete_exit_step');
+    // key is being pressed: reset timer
+    autocomplete_field.on('keydown', function () {
+        clearTimeout(typingTimer);
+    });
+
+    // after key has been pressed: start timer
+    autocomplete_field.on('keyup', function () {
+        clearTimeout(typingTimer);
+        typingTimer = setTimeout(doneTyping, doneTypingInterval);
+    });
+
+    autocomplete_field.bind('railsAutocomplete.select', function(event, data){
+        doneTyping();
+    });
+
+    // user stopped typing, search for existing step
+    function doneTyping () {
+        var next_step = $('#autocomplete_exit_step').val();
+        var next_step_message = $('#next_step_message');
+
+        if (next_step.length == 0) {
+            next_step_message.empty();
+            return;
+        }
+
+        var found_step_title = false;
+        for (var index = 0; index < step_titles.length; index++) {
+            var step = step_titles[index];
+
+            if (step.title == next_step){
+
+                next_step_message.empty();
+                next_step_message.html("There is already a step with this title. <br />This next step will be a duplicate of <strong>" + next_step + "</strong>.");
+
+                return;
+            }
+        }
+
+        // the next step typed by the user was not found in array of step titles
+        next_step_message.empty();
+        next_step_message.html("No matches for <strong>" + next_step + "</strong>. <br />A new step will be created.");
+    }
+  </script>

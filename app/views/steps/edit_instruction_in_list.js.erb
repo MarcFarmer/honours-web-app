@@ -1,0 +1,4 @@
+$("#instruction_<%= @instruction.id %>").html("<%= escape_javascript(render partial: 'steps/edit_in_list', 
+  locals: { url: pathway_step_instruction_path(@step.pathway, @step, @instruction), 
+    nested_model: 'instruction', 
+    nested_instance: @instruction } ) %>");

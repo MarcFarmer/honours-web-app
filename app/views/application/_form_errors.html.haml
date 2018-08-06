@@ -1,0 +1,15 @@
+.error-container
+  - if local_assigns.has_key?(:child_instance)
+    - errors = instance.errors.full_messages + child_instance.errors.full_messages
+  - else
+    - errors = instance.errors.full_messages
+
+  - if errors.any?
+    .alert.alert-warning
+      %strong
+        = pluralize(errors.count, "more thing")
+        before you continue:
+      %ul.list-group.no-bullet
+        - errors.each do |message|
+          %li
+            = message

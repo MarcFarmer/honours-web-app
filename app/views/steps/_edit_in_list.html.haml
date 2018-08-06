@@ -1,0 +1,39 @@
+// local variables
+// nested_model - 'exit_condition' OR 'question' OR 'instruction'
+// nested_instance - an instance of ExitCondition OR Question OR Instruction
+
+- if nested_model == 'question' || nested_model == 'instruction'
+  %td{colspan: "4"}
+    .edit-in-list
+      = form_for @step, url: url, html: {method: :put}, remote: true do |f|
+        - if @step.errors.any?
+          #error_explanation
+            %h2
+              = pluralize(@step.errors.count, "error")
+              prohibited this step from being saved:
+            %ul
+              - @step.errors.full_messages.each do |msg|
+                %li= msg
+
+        %table.table
+          %tbody
+            %tr
+              %td.col-md-2
+                %strong
+                  = nested_model.capitalize
+              %td.col-md-5
+                .fields
+                  = f.fields_for "#{nested_model}s".to_sym, nested_instance do |builder|
+                    = render partial: "#{nested_model}s/edit_in_list_fields", locals: { f: builder, "#{nested_model}".to_sym => nested_instance }
+                .actions
+                  %button.btn.btn-primary{:name => "commit", :type => "submit", :value => "Save"} Save
+                  %button.btn.btn-danger{:name => "commit", :type => "submit", :value => "Cancel"} Cancel
+              %td.col-md-2
+                - if nested_model == 'instruction'
+                  N/A
+              %td.buttons-cell
+                // Buttons
+
+
+- else
+  = render partial: 'exit_conditions/edit_in_list_fields', locals: { url: url, nested_model: nested_model, nested_instance: nested_instance }

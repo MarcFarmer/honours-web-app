@@ -1,0 +1,13 @@
+%td
+  = link_to exit_condition.exit_step.name, edit_pathway_step_path(exit_condition.exit_step.pathway, exit_condition.exit_step), class: 'exit-condition-link'
+
+%td
+  - if exit_condition.min_risk == exit_condition.max_risk
+    = exit_condition.min_risk
+  - else
+    = exit_condition.min_risk
+    to
+    = exit_condition.max_risk
+
+%td.buttons-cell
+  = render 'steps/list_item_buttons', instance: exit_condition

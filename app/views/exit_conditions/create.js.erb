@@ -1,0 +1,12 @@
+$("#editable_list.exit-conditions").html("<%= escape_javascript(render partial: 'steps/exit_conditions_list',
+  locals: { step: @step, exit_conditions: @exit_conditions } ) %>");
+$("#next_step_heading").html("<%= escape_javascript(render partial: 'steps/next_step_heading') %>");
+
+$("#ec_form_errors").html("<%= escape_javascript(render partial: 'application/form_errors',
+  locals: { instance: @step, child_instance: @exit_step } ) %>");
+
+<% if @valid %>
+    $('#ec_form input[type=text],input[type="number"]').each(function() {
+        $(this).val('');
+    });
+<% end %>

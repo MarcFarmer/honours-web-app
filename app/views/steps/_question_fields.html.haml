@@ -1,0 +1,21 @@
+.fields
+  %p
+    = f.text_field :content, :rows => 3, :placeholder => "e.g. Temperature > 38 degrees?", class: 'question-content text-field'
+    %br/
+  %strong
+    Answers
+  %br
+  %label
+    %input#radio_default_answers{:name => 'toggle-answer-fields', :type => 'radio', :value => 'default'}
+    Yes/No
+  %label
+    %input#radio_custom_answers{:name => 'toggle-answer-fields', :type => 'radio', :value => 'custom'}
+    Custom answers
+
+  #default_answers_fields.answers-fields
+    = f.fields_for :answers, answer_index: 0 do |builder| # index tells fields partial if it is first or second answer
+      = render 'answer_fields_default', :f => builder
+  #custom_answers_fields.answers-fields
+    = f.fields_for :answers do |builder|
+      = render 'answer_fields_empty', :f => builder
+    %p= link_to_add_fields "Add answer", f, :answers

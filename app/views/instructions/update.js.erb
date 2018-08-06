@@ -1,0 +1,12 @@
+<% if params[:commit] == 'Save' %>
+    <% if @valid %>
+        $("#instruction_<%= @instruction.id %>").html("<%= escape_javascript(render partial: 'steps/instruction_list_item',
+          locals: { instruction: @instruction } ) %>");
+    <% else %>
+        $("#instruction_<%= @instruction.id %>").find('.edit_instruction_form_errors').html("<%= escape_javascript(render partial: 'application/form_errors',
+          locals: { instance: @instruction } ) %>");
+    <% end %>
+<% else %>
+    $("#instruction_<%= @instruction.id %>").html("<%= escape_javascript(render partial: 'steps/instruction_list_item',
+      locals: { instruction: @instruction } ) %>");
+<% end %>

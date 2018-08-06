@@ -1,0 +1,9 @@
+<% if @valid %>
+  // update step name on page
+  $("#edit_step_heading").html("<%= escape_javascript(render partial: 'steps/heading') %>");
+  // close the modal form
+  $('#edit_step_modal').modal('hide');
+<% else %>
+  // form input is invalid, render form
+  $("#edit_step_form").html("<%= escape_javascript(render partial: 'steps/form') %>");
+<% end %>

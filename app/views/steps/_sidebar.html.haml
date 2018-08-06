@@ -1,0 +1,35 @@
+.sidebar.panel.panel-default#sidebar_content
+  %ul.nav.nav-stacked
+    %li
+      %a{:href => root_path}
+        = html_icon('home')
+        %br
+        View all pathways
+    %br
+    - if page == 'show_pathway'
+      %li
+        %a{:href => pathway_preview_from_step_path(@pathway, @first_step, @first_step)}
+          %i.icon-mobile.icon
+          %br
+          Preview pathway
+    - else
+      %li
+        %a{:href => pathway_path(@pathway)}
+          %i.icon-tree.icon
+          %br
+          View all steps
+      %br
+        - if page == 'edit'
+          %li
+            %a{:href => pathway_preview_from_step_path(@pathway, @step, @step), :class => 'navigation-link'}
+              %i.icon-mobile.icon
+              %br
+              Preview step
+        - else
+          %li
+            %a{:href => edit_pathway_step_path(@pathway, @step), :class => 'navigation-link'}
+              = html_icon('edit')
+              %br
+              Edit
+              %strong
+                = @step.name

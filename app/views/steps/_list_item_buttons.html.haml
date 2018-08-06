@@ -1,0 +1,21 @@
+-# local variables
+-# instance: A question, instruction or exit condition that is being rendered as a list item
+
+.btn-group
+  -# Get path for edit and remove buttons
+  - if instance.class == Question
+    - edit_path = edit_question_in_list_path(question_id: instance.id)
+    - remove_path = pathway_step_question_path(instance.step.pathway, instance.step, instance)
+  - elsif instance.class == Instruction
+    - edit_path = edit_instruction_in_list_path(instruction_id: instance.id)
+    - remove_path = pathway_step_instruction_path(instance.step.pathway, instance.step, instance)
+  - else
+    - edit_path = edit_exit_condition_in_list_path(exit_condition_id: instance.id)
+    - remove_path = pathway_step_exit_condition_path(instance.step.pathway, instance.step, instance)
+
+  = link_to html_icon('edit'), edit_path, remote: true, class:"btn btn-success button-edit button-editable-item", 'data-toggle' => 'tooltip', 'data-placement' => 'right', 'title' => 'Edit'
+  = link_to html_icon('remove'), remove_path, method: :delete, remote: true, class:"btn btn-danger button-remove button-editable-item", 'data-toggle' => 'tooltip', 'data-placement' => 'right', 'title' => 'Remove'
+
+  - if instance.class != ExitCondition
+    = link_to html_icon('up'), move_up_in_list_path(step_action_id: instance.id), remote: true, class:"btn btn-default button-up button-editable-item", 'data-html' => 'true', 'data-toggle' => 'tooltip', 'data-placement' => 'right', 'title' => 'Move up in list'
+    = link_to html_icon('down'), move_down_in_list_path(step_action_id: instance.id), remote: true, class:"btn btn-default button-down button-editable-item", 'data-html' => 'true', 'data-toggle' => 'tooltip', 'data-placement' => 'right', 'title' => 'Move down in list'

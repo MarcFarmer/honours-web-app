@@ -1,0 +1,13 @@
+-# for answer fields that appear by default in the new question form
+- if f.options[:answer_index] == 0 # first answer fields are for default answer 'Yes'
+  %p.fields
+    = f.text_field :content, class: 'answer-content-yes text-field', value: 'Yes', readonly: true, style: 'background-color: #e1e1e1' # can't edit
+    = f.number_field :score, min: 0, max: 99, class: 'risk-score-field', value: '1' # default risk score
+    = link_to_remove_fields '', f # can't remove default answers
+- else # second answer fields are for default answer 'No'
+  %p.fields
+    = f.text_field :content, class: 'answer-content-no text-field', value: 'No', readonly: true, style: 'background-color: #e1e1e1'
+    = f.number_field :score, min: 0, max: 99, class: 'risk-score-field', value: '0'
+    = link_to_remove_fields '', f
+
+- f.options[:answer_index] += 1

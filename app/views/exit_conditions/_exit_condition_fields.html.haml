@@ -1,0 +1,17 @@
+= f.hidden_field :step, value: @step.id
+%table.table
+  %tbody
+    .tr
+      %td.col-md-3
+        = autocomplete_field_tag 'autocomplete_exit_step', '', autocomplete_step_name_pathways_path, name: 'step[exit_conditions_attributes][0][exit_step]', size: 30, class: 'exit-condition-exit-step text-field autocomplete-text-field', placeholder: 'Enter the title of the next step', autocomplete: 'off'
+        %br
+        %br
+        .actions
+          %button.btn.btn-primary{:name => "commit", :type => "submit", :value => "Add step"} Submit next step and score range
+      %td.col-md-5#visit_step_text
+        Visit this step when score is
+      %td.col-md-4
+        = f.number_field :min_risk, class: 'risk-score-field score-range-field text-field', min: 0
+        to
+        = f.number_field :max_risk, class: 'risk-score-field score-range-field text-field', min: 0
+%p.bg-success#next_step_message

@@ -1,0 +1,24 @@
+%td
+  Question
+%td
+  %strong
+    = question.content
+  %table
+    %tbody
+      - question.answers.each do |a|
+        %tr
+          %td
+            &nbsp; &nbsp; &nbsp; #{a.content}
+
+%td
+  %table
+    %tbody
+      %td
+        &nbsp;
+        - question.answers.each do |a|
+          %tr
+            %td
+              = a.score
+
+%td.buttons-cell
+  = render 'steps/list_item_buttons', instance: question

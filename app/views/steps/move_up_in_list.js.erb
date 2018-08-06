@@ -1,0 +1,11 @@
+<% if @valid %>
+    <% if @step_action.type == 'Question' %>
+        $("tr#question_<%= @step_action.id %>").each(function () {
+            $(this).insertBefore($(this).prev("tr.editable-item"));
+        });
+    <% else %>
+        $("tr#instruction_<%= @step_action.id %>").each(function () {
+            $(this).insertBefore($(this).prev("tr.editable-item"));
+        });
+    <% end %>
+<% end %>

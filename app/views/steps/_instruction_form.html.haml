@@ -1,0 +1,9 @@
+= form_for @step, url: {action: "edit"} do |f|
+  = render 'application/form_errors', instance: @step
+
+  %table
+    = f.fields_for :instructions, @step.instructions.last do |builder|
+      = render 'instruction_fields', :f => builder
+
+  .actions
+    %button.btn.btn-primary{:name => "commit", :type => "submit", :value => "Submit instruction"} Submit instruction

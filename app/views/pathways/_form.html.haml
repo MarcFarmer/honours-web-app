@@ -1,0 +1,20 @@
+= form_for @pathway, remote: true do |f|
+
+  #new_pathway_step1
+    = render partial: 'pathways/name_and_tags_fields', locals: {f: f}
+    = f.submit 'Save pathway name and tags', class: 'btn btn-primary', name: 'step1'
+    %br
+    %br
+    .modal-form-message
+      %p
+        You can always return to this screen to edit the pathway name and tags
+
+  #new_pathway_step2{:style => "display:none"}
+    = render partial: 'pathways/step_name_fields', locals: {f: f}
+    = f.submit 'Save and edit the first step', class: 'btn btn-primary', name: 'step2'
+    %br
+    %br
+    You can always return to this screen to edit the first step
+    .modal-form-message
+      %p
+        You can always return to this screen to edit the pathway name and tags

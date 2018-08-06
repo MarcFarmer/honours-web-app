@@ -1,0 +1,9 @@
+#score_range_message.alert.alert-info
+  = html_icon('info')
+  - if @questions_count > 0
+    Answering the
+    = 'question'.pluralize(@questions_count)
+    in this step will give a score of
+    = "#{@min_score} to #{@max_score}."
+  - else
+    Add questions to this step to determine which step to go to next

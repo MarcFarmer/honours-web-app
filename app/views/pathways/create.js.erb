@@ -1,0 +1,45 @@
+/* enter pathway name and tags */
+<% if @form_step == 1 %>
+    <% if @valid %>
+        // hide form step 1 with javascript with form input still present, show form part 2
+        // render error partial again in case there were previous errors with form input
+        $('#pathway_form_errors').html("<%= escape_javascript(render partial: 'application/form_errors', locals: {instance: @pathway}) %>");
+        $('#new_pathway_step1').hide();
+        $('#new_pathway_step2').show();
+        $('#pathway_steps_attributes_0_name').val('').focus(); // clear default step name
+        $("#pathway_modal input[name='step1']").clone().attr('type','button')   // enter key presses 2nd submit button
+            .insertAfter("#pathway_modal input[name='step1']").prev().remove();
+        $("#pathway_modal input[name='step2']").clone().attr('type','submit')
+            .insertAfter("#pathway_modal input[name='step2']").prev().remove();
+    <% else %>
+        // form input is invalid, render form
+        $('#pathway_form').html("<%= escape_javascript(render partial: 'pathways/form') %>");
+        $('#pathway_form_errors').html("<%= escape_javascript(render partial: 'application/form_errors', locals: {instance: @pathway}) %>");
+        $('#pathway_steps_attributes_0_name').val('Preliminary Diagnosis'); // set default step name
+    <% end %>
+/* enter title of first step */
+<% elsif @form_step == 2 %>
+    <% if @valid %>
+        // form has been completed, redirect to edit step page
+        $(window.location.replace("<%= edit_pathway_step_path(pathway_id: @pathway.id, id: @pathway.steps.first.id) %>"));
+    <% else %>
+        // form input is invalid, render form
+        $("#pathway_form").html("<%= escape_javascript(render partial: 'pathways/form') %>");
+        $('#pathway_form_errors').html("<%= escape_javascript(render partial: 'application/form_errors', locals: {instance: @pathway}) %>");
+        <% if Pathway.new(name: @pathway.name).valid? %> // if the pathway name is still valid (has not been taken)
+            $('#new_pathway_step1').hide(); // skip to second part of form
+            $('#new_pathway_step2').show();
+            $("#pathway_modal input[name='step1']").clone().attr('type','button')   // enter key presses 2nd submit button
+                .insertAfter("#pathway_modal input[name='step1']").prev().remove();
+            $("#pathway_modal input[name='step2']").clone().attr('type','submit')
+                .insertAfter("#pathway_modal input[name='step2']").prev().remove();
+        <% else %>  // pathway name no longer valid, return to first step of form
+            $('#new_pathway_step1').show(); // skip to second part of form
+            $('#new_pathway_step2').hide();
+            $("#pathway_modal input[name='step1']").clone().attr('type','submit')   // enter key presses 1st submit button
+                .insertAfter("#pathway_modal input[name='step1']").prev().remove();
+            $("#pathway_modal input[name='step2']").clone().attr('type','button')
+                .insertAfter("#pathway_modal input[name='step2']").prev().remove();
+        <% end %>
+    <% end %>
+<% end %>

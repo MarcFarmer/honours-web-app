@@ -1,0 +1,13 @@
+<% if params[:commit] == 'Save' %>
+    <% if @valid %>
+        $("#question_<%= @question.id %>").html("<%= escape_javascript(render partial: 'steps/question_list_item',
+         locals: { question: @question } ) %>");
+        $("#score_range_message").html("<%= escape_javascript(render partial: 'steps/score_range_message') %>");
+    <% else %>
+        $("#question<%= @question.id %>").find('.edit_question_form_errors').html("<%= escape_javascript(render partial: 'application/form_errors',
+          locals: { instance: @question } ) %>");
+    <% end %>
+<% else %>
+    $("#question_<%= @question.id %>").html("<%= escape_javascript(render partial: 'steps/question_list_item',
+     locals: { question: @question } ) %>");
+<% end %>

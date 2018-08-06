@@ -1,0 +1,11 @@
+.edit_question_form_errors
+  = render 'application/form_errors', instance: @question
+
+%p
+  = f.text_field :content, :rows => 3, class: 'question-content text-field'
+  %br/
+
+= f.fields_for :answers do |builder|
+  = render 'steps/answer_fields_empty',:f => builder
+
+%p= link_to_add_fields "Add answer", f, :answers

@@ -1,0 +1,15 @@
+// local variables
+// f = block argument from form_for
+%h4
+  - if @pathway.steps.count <= 1
+    What is the title of the first step in the clinical pathway?
+  - else
+    What is the title of this step?
+%p
+  eg. 'Is patient stable?'
+
+.fields
+  = f.fields_for :steps, @step do |builder|
+    = render 'step_fields', :f => builder
+
+%br

@@ -1,0 +1,129 @@
+%br
+.container#edit_step_container
+  .row
+    .col-md-10
+      .panel.panel-default
+        .panel-heading#edit_step_heading
+          Preview of
+          %strong
+            = @step.name
+          %br
+          in pathway
+          %strong
+            = @pathway.name
+        .panel-body
+          .score-message
+            The score for your answers is
+            %strong
+              %span#current_score
+                0
+
+          - if @step.step_actions.blank?
+            .empty-step-content-message
+              This step does not have any questions or instructions.
+              %br
+              %a{:href => edit_pathway_step_path(@pathway, @step), :class => 'navigation-link'}
+                Add questions and instructions to
+                %strong
+                  = @step.name
+              %br
+              %hr
+          - else
+            %table.table#content
+              %thead
+                %tr
+                  %th.col-md-8
+                    %h2
+                      Question/Instruction
+                  %th.col-md-4
+                    .btn-group.preview-answers{"data-toggle" => "buttons"}
+                      %label.preview-button.btn.btn-default{:onclick => "$('.answer-score').toggle();"}
+                        %input{:autocomplete => "off", :type => "checkbox"}
+                        = html_icon('info')
+                        Show score for each answer
+
+              %tbody
+                - @step.step_actions.each do |step_action|
+                  %tr.step-action-preview
+                    %td
+                      = step_action.content
+                    %td
+                      - if step_action.class == Instruction
+                        .btn-group.preview-answers{"data-toggle" => "buttons"}
+                          %label.btn.btn-success.preview-button.active
+                            %input{:autocomplete => "off", :checked => "checked", :name => "options", :type => "checkbox"}
+                              Done
+                      - elsif step_action.class == Question
+                        .btn-group.preview-answers.question-answers{"data-toggle" => "buttons"}
+                          - step_action.answers.each do |answer|
+                            %label.btn.btn-default.answer-button{class: "answer-#{answer.id}"}
+                              %input{:autocomplete => "off", :name => "question-#{step_action.id}", :type => "radio", :value => answer.score, class: "answer-#{answer.id}"}
+                                = answer.content
+                                %span.answer-score{style: 'display: none;'}
+                                  = "(#{answer.score})"
+
+            .preview-message
+              Answering all questions gives a score from
+              %strong
+                %span#score_range
+                  %span#min_score
+                    = @min_score
+                  to
+                  %span#max_score
+                    = @max_score
+
+            %br
+            %br
+
+          - if @step.exit_conditions.blank?
+            .empty-step-content-message
+              There are no next steps after
+              = "#{@step.name}."
+              %br
+              = link_to '', :href => edit_pathway_step_path(@pathway, @step, tab: 'next-step'), :class => 'navigation-link' do
+                Add next steps to
+                %strong
+                  = @step.name
+              %br
+          - else
+            .preview-message
+              %strong
+                Next step:
+              %span#next_step
+              = form_tag(pathway_preview_from_step_submit_path(@pathway, @step, @return_step), method: 'post') do
+                %table.table#content
+                  %thead
+                    %tr
+                      %td
+                        %strong
+                          Step title
+                      %td
+                        %strong
+                          Score range
+                  %tbody
+                    - @step.exit_conditions.each do |exit_condition|
+                      %tr
+                        %td.next-exit-step
+                          %input{type: 'hidden', name: 'next_step_id', value: exit_condition.exit_step.id, disabled: true }
+                          %input{type: 'hidden', name: 'min', value: exit_condition.min_risk }
+                          %input{type: 'hidden', name: 'max', value: exit_condition.max_risk }
+                          %span.glyphicon
+                          = exit_condition.exit_step.name
+                          .next-step-warning
+                        %td
+                          - if exit_condition.min_risk == exit_condition.max_risk
+                            = exit_condition.min_risk
+                          - else
+                            = exit_condition.min_risk
+                            to
+                            = exit_condition.max_risk
+                = button_tag(type: 'submit', class: 'btn btn-success btn-lg', id: 'preview_next_step') do
+                  Next step
+                  &nbsp;&nbsp;
+                  = html_icon('ok')
+
+    .col-md-2
+      = render 'steps/sidebar', { page: 'preview' }
+
+%input{type: 'hidden', name: 'step_min', value: @min_score }
+%input{type: 'hidden', name: 'step_max', value: @max_score }

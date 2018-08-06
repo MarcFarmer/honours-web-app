@@ -1,0 +1,12 @@
+// Place all the styles related to the ExitConditions controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+// Show up/down arrow buttons only when hovering over numeric input
+input[type=number] {
+  -moz-appearance: textfield;
+}
+input[type="number"]:hover,
+input[type="number"]:focus {
+  -moz-appearance: number-input;
+}

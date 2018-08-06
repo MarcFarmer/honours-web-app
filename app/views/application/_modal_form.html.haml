@@ -1,0 +1,26 @@
+// local variables
+// form_partial: path to partial that contains form
+// modal_id: id of top level div, used to identify the modal when opening and closing
+// form_id: id of div that contains the form, used to identify form when rendering upon error
+// form_message: 'pathway' OR 'step'
+
+- if modal_id == nil
+  - modal_id = 'pathway_modal'
+
+%div{id: modal_id, class: 'modal fade', role: 'dialog'}
+  .modal-dialog
+    .modal-content
+      .modal-body
+        #pathway_form_errors
+          = render 'application/form_errors', instance: @pathway
+        #div{id: form_id}
+          = render partial: form_partial
+        %br
+        .modal-form-message
+          %p
+            - if form_message == 'step'
+              You can always return to this screen to edit the title of the step
+            - elsif form_message == 'pathway'
+              You can always return to this screen to edit the pathway name and tags
+      .modal-footer
+        %button.btn.btn-default{"data-dismiss" => "modal", :type => "button"} Cancel

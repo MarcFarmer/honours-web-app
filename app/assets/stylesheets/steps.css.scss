@@ -1,0 +1,240 @@
+// Place all the styles related to the Steps controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+// forms for new list items
+.qi-form-background {
+  background-color: #F5F5F5;
+  border: 2px solid #dddddd;
+}
+
+#ec_form {
+  font-size: 1.2em;
+}
+
+// tabs to toggle viewing/editing questions and instructions or exit conditions
+#step_tabs {
+  a {
+    font-size: 45px;
+
+    // make tab wider on both sides
+    padding: 0 30px;
+
+    // same padding above and below arrow icon
+    height: 56px;
+    vertical-align: middle;
+
+    // same margin above and below tab
+    margin-bottom: 15px;
+    margin-top: 0px;
+  }
+
+  // tab that can be clicked to toggle
+  a.step-tab-enabled {
+    background-color: #090;
+    color: white;
+    text-shadow: 0 8px 8px rgba(0, 0, 0, 0.3);
+  }
+
+  a.step-tab-enabled:hover {
+    background-color: #008A2E;
+    border-color: #CCC;
+    text-shadow: 0 8px 8px rgba(0, 0, 0, 0.3);
+  }
+
+  // tab that cannot be clicked to toggle
+  a.step-tab-disabled {
+    background-color: #F1F1F1;
+    color: #C6C6C6;
+  }
+
+  a.step-tab-disabled:hover {
+    cursor: not-allowed;
+  }
+}
+
+// question/instruction/exit condition in main content list
+.editable-item, .step-action-preview {
+  font-size: 1.4em;
+
+  input {
+    font-size: 0.8em;
+    line-height: normal;
+  }
+
+  form a {
+    font-size: 0.8em;
+  }
+
+  form a.exit-condition-link {
+    font-size: 1.0em;
+  }
+
+  .edit-without-padding {
+    padding-left: 4px;
+  }
+}
+
+// buttons in question/instruction/exit condition list item to edit/remove/move
+.button-editable-item {
+  font-size: 16px;
+}
+
+td.buttons-cell {
+  text-align: center;
+
+  .btn-group a {
+    font-size: 22px;
+    padding-bottom: 0px;
+    padding-left: 9px;
+    padding-right: 9px;
+  }
+}
+
+.risk-score-field {
+  width: 3em;
+}
+
+// navigation buttons on the side of the main content
+#sidebar_content {
+  padding-bottom: 15px;
+  padding-top: 15px;
+  text-align: center;
+  max-width: 180px;
+  width: 180px;
+
+  .glyphicon, .icon {
+    font-size: 2.6em;
+  }
+}
+
+// keep navigation buttons on screen while scrolling
+.sticky {
+  position:fixed;
+  top:0;
+}
+
+#edit_step_container {
+  width: 95%;
+}
+
+// heading that contains pathway name and step title
+#edit_step_heading {
+  background-color: #5E5E5E;
+  color: white;
+  font-size: 2.3em;
+  text-align: center;
+
+  a {
+    color: #33CCFF;
+    font-size: 25px;
+  }
+
+  a:hover {
+    color: #5CADFF;
+  }
+
+  .header-help-message {
+    font-size: 16px;
+  }
+}
+
+// links and tabs below main page content
+#under_step_content ul {
+  border-bottom: 0px;
+  font-size: 1.4em;
+  text-align: center;
+  text-shadow: 0 4px 4px rgba(0, 0, 0, 0.1);
+
+  #under_step_left {
+    text-align: left;
+  }
+
+  #under_step_right {
+    text-align: right;
+  }
+}
+
+.navigation-link {
+  margin-top: -4px;
+
+  i {
+    font-size: 1em;
+  }
+}
+
+// text wrap long table content
+table {
+  table-layout:fixed;
+
+  td {
+    word-wrap:break-word;
+  }
+}
+
+// style/information for new exit condition form
+#visit_step_text {
+  line-height: 2;
+  text-align: right;
+}
+
+#score_range_message {
+  margin: 0 auto;
+  text-align: center;
+
+  .glyphicon {
+    font-size: 1.3em;
+  }
+}
+
+// preview
+.preview-answers {
+  label {
+    font-size: 1em;
+  }
+
+  label.active {
+//    background-color: #4973af;
+//    color: white;
+    font-weight: bold;
+    text-shadow: 0 4px 4px rgba(0, 0, 0, 0.1);
+  }
+}
+
+.preview-message {
+  font-size: 1.3em;
+  text-align: center;
+}
+
+.score-message {
+  font-size: 1.5em;
+  text-align: center;
+
+  #current_score {
+    color: green;
+    font-size: 1.5em;
+    font-weight: bold;
+  }
+}
+
+.preview-nav-button {
+  line-height: normal;
+}
+
+.empty-step-content-message {
+  font-size: 1.3em;
+  text-align: center;
+}
+
+#preview_next_step {
+  font-size: 1.5em;
+
+  .glyphicon {
+    vertical-align: -3px;
+  }
+}
+
+#next_step_message {
+  padding-left: 10px;
+  padding-right: 10px;
+}

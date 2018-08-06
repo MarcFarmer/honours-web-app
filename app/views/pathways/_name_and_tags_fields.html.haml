@@ -1,0 +1,26 @@
+// local variables
+// f = block argument from form_for
+.fields
+  %h4
+    What is the name of your clinical pathway?
+  %p
+    = f.text_field :name, class: 'pathway-name text-field'
+  %br
+
+  %h4
+    You can also add tags;
+  %h4
+    any other names or abbreviations for this clinical pathway
+  %p
+    eg. If the pathway name is "Sepsis"
+    %br
+    the tags might be "Septicaemia" and "Septic poisoning"
+
+  .fields
+    = f.fields_for :tags do |builder|
+      = render 'tag_fields', f: builder
+    %p= link_to_add_fields 'New tag', f, :tags
+
+%br
+%br
+%br

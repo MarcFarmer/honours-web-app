@@ -1,0 +1,26 @@
+development:
+  adapter: postgresql
+  encoding: unicode
+  database: app_development
+  pool: 5
+  username: pguser
+  password: a
+
+test: &test
+  adapter: postgresql
+  encoding: unicode
+  database: app_test
+  pool: 5
+  username: pguser
+  password: a
+
+production:
+  adapter: postgresql
+  encoding: unicode
+  database: app_production
+  pool: 5
+  username: pguser
+  password: a
+
+cucumber:
+  <<: *test
