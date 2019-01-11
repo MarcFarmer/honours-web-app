@@ -1,8 +1,9 @@
 # honours-web-app
 The project was developed on a university hosted repository, so commit history is not included.
 
-Prototype Rails web app for university honours project.
+This is a prototype Rails web app for university honours project.
 Royal Adelaide Hospital wanted prototype software to increase adherence to medical protocols in the Emergency Department (ED).
+
 We created a web app for expert clinicians to input and edit the latest evidence-based medical protocols (known as clinical pathways).
 We created a corresponding mobile app for patient-facing clinicians in the emergency department to interactively follow the medical protocols.
 
